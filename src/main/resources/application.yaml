@@ -1,0 +1,26 @@
+server:
+  port: 8080
+  
+spring:
+  application:
+    name: api-gateway
+    
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+      
+zuul:
+  host:
+    connect-timeout-millis: 5000000
+    socket-timeout-millis: 5000000
+  ignored-services: '*'
+  routes:
+    customer-service:
+      path: /customer/**
+      service-id: customer-service
+      strip-prefix: true
