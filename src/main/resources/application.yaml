@@ -16,11 +16,44 @@ eureka:
       
 zuul:
   host:
-    connect-timeout-millis: 5000000
-    socket-timeout-millis: 5000000
+    time-to-live: -1
+    connect-timeout-millis: 5000
+    socket-timeout-millis: 60000
+    max-per-route-connections: 10000
+    max-total-connections: 5000
+  semaphore:
+    max-semaphores: 500
   ignored-services: '*'
+  sensitive-headers: Cookie,Set-Cookie
   routes:
+    oauth:
+      path: /oauth/**
+      service-id: customer-service
+      strip-prefix: false
     customer-service:
       path: /customer/**
       service-id: customer-service
       strip-prefix: true
+    payment-service:
+      path: /payment/**
+      service-id: payment-service
+      strip-prefix: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 122000
+ribbon:
+  ReadTimeout: 60000
+  connection-timeout: 3000
+  eureka:
+    enabled: true
+      
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: 123
