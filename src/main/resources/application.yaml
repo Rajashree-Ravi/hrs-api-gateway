@@ -34,9 +34,21 @@ zuul:
       path: /customer/**
       service-id: customer-service
       strip-prefix: true
+    reservation-service:
+      path: /reservation/**
+      service-id: reservation-service
+      strip-prefix: true
     payment-service:
       path: /payment/**
       service-id: payment-service
+      strip-prefix: true
+    hotel-management-service:
+      path: /hotel-management/**
+      service-id: hotel-management-service
+      strip-prefix: true
+    notification-service:
+      path: /notification/**
+      service-id: notification-service
       strip-prefix: true
 
 hystrix:
